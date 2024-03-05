@@ -97,22 +97,22 @@ module.exports = function (app, clinet, BoardModel, ThreadModel, ReplyModel) {
   }).get(async (req, res) => {
 
     if (req.params.board != undefined && req.query.thread_id != undefined) {
-      const borad = await BoardModel.findOne({ name: req.params.board, threads: new mongoose.Types.ObjectId(thread_id) });
+      const borad = await BoardModel.findOne({ name: req.params.board, threads: new mongoose.Types.ObjectId(req.query.thread_id) });
 
       if (!borad) {
         res.json({ "error": "can't find the board or the thread!!!" });
       } else {
 
-        const threads = await ThreadModel.find({
-          '_id': { $in: borad.threads }
-        }).select({ 'replies': { '$slice': -3 } }).select('-delete_password -reported').populate('replies')
+        const thread = await ThreadModel.findOne({
+          '_id': new mongoose.Types.ObjectId(req.query.thread_id)
+        }).select('-delete_password -reported').populate('replies')
           .exec();
 
-        if (!borad || !threads) {
+        if (!borad || !thread) {
           res.json({ "error": "Something went wrong !!!" });
         }
         else {
-          res.json(threads);
+          res.json(thread);
         }
       }
     } else {
