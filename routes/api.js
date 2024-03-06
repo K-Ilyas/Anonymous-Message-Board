@@ -142,7 +142,7 @@ module.exports = function (app, clinet, BoardModel, ThreadModel, ReplyModel) {
 
           if (newReply) {
             // update the thread bumped_date 
-            await ThreadModel.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(thread_id) }, { bumped_on: newReply.created_at, $push: { replies: newReply } });
+            await ThreadModel.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(thread_id) }, { bumped_on: newReply.created_on, $push: { replies: newReply } });
           }
 
           // send the json response
