@@ -49,7 +49,6 @@ app.route('/')
   });
 
 //For FCC testing purposes
-fccTestingRoutes(app);
 
 //Routing for API 
 
@@ -66,6 +65,7 @@ main(async (mongooseClinet,BoardModel,ThreadModel, ReplyModel) => {
 
 });
 //404 Not Found Middleware
+fccTestingRoutes(app);
 
 //Start our server and tests!
 const listener = app.listen(process.env.PORT || 3000, function () {
@@ -79,7 +79,7 @@ const listener = app.listen(process.env.PORT || 3000, function () {
         console.log('Tests are not valid:');
         console.error(e);
       }
-    }, 1500);
+    }, 3500);
   }
 });
 
